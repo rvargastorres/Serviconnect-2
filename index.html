@@ -1,36 +1,1471 @@
+  
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de GitHub Pages</title>
+    <title>ServiConnect - Conectamos Profesionales con Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --light: #f9fafb;
+            --dark: #111827;
+        }
         body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            background-color: #f0f0f0;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
             text-align: center;
         }
-        .container {
-            padding: 2em;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .section-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1rem;
         }
-        h1 {
-            color: #0366d6; /* Un azul similar al de GitHub */
+        .card {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background-color: white;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .service-card {
+            cursor: pointer;
+        }
+        .rating {
+            color: #f59e0b;
+        }
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        .page-section {
+            padding: 5rem 1rem;
+        }
+        .dashboard-sidebar {
+            background-color: var(--dark);
+            color: white;
+            min-height: 500px;
+        }
+        .dashboard-sidebar a {
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.75rem 1rem;
+            display: block;
+            transition: all 0.3s;
+        }
+        .dashboard-sidebar a:hover, .dashboard-sidebar a.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-content {
+            min-height: 500px;
+            background-color: #f3f4f6;
+        }
+        .step-circle {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .chat-message {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            max-width: 75%;
+        }
+        .chat-message.user {
+            background-color: var(--primary);
+            color: white;
+            margin-left: auto;
+        }
+        .chat-message.other {
+            background-color: #e5e7eb;
+        }
+        .filter-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .filter-badge button {
+            margin-left: 0.25rem;
+            font-size: 0.75rem;
+        }
+        /* Ensure the design is optimized for PDF export */
+        @media print {
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .page-section {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>¡Hola desde GitHub Pages!</h1>
-        <p>Si puedes ver esto, tu página de prueba se ha publicado correctamente.</p>
-        <p>Fecha y hora de la prueba (aproximada en España): Miércoles, 23 de Abril de 2025, 00:40</p>
+    <!-- Encabezado y Navegación -->
+    <header class="bg-white shadow-md fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <svg class="h-10 w-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span class="ml-3 text-xl font-bold text-gray-800">ServiConnect</span>
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#como-funciona" class="text-gray-600 hover:text-blue-600 font-medium">Cómo funciona</a>
+                    <a href="#servicios" class="text-gray-600 hover:text-blue-600 font-medium">Servicios</a>
+                    <a href="#profesionales" class="text-gray-600 hover:text-blue-600 font-medium">Profesionales</a>
+                    <a href="#beneficios" class="text-gray-600 hover:text-blue-600 font-medium">Beneficios</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Iniciar sesión</a>
+                    <a href="#" class="btn-primary inline-block">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Espacio para el header fijo -->
+    <div class="pt-20"></div>
+
+    <!-- Sección Hero -->
+    <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Conectamos clientes con los mejores profesionales</h1>
+                    <p class="text-xl mb-8">Encuentra servicios de calidad o ofrece tus habilidades profesionales en nuestra plataforma de confianza.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="btn-secondary">Buscar un profesional</a>
+                        <a href="#" class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-md font-semibold">Ofrecer mis servicios</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="rounded-lg overflow-hidden shadow-2xl">
+                        <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/pro-services.webp" alt="Profesionales trabajando" class="w-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Categorías Destacadas -->
+    <section id="servicios" class="page-section bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Servicios destacados</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Explora nuestra amplia variedad de categorías y encuentra el servicio profesional que necesitas para tu hogar, negocio o proyecto personal.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Servicio 1 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Fontanería</h3>
+                    <p class="text-gray-600 mb-4">Soluciones para fugas, instalaciones y reparaciones de sistemas de agua y desagüe.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>243 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 2 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Electricidad</h3>
+                    <p class="text-gray-600 mb-4">Instalaciones, reparaciones y mantenimiento de sistemas eléctricos domésticos e industriales.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>187 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 3 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Asesoría Legal</h3>
+                    <p class="text-gray-600 mb-4">Consultas, representación y orientación en diversos asuntos legales y administrativos.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>129 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 4 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Pintura</h3>
+                    <p class="text-gray-600 mb-4">Servicios de pintura interior y exterior para hogares, oficinas y locales comerciales.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>215 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 5 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Desarrollo Web</h3>
+                    <p class="text-gray-600 mb-4">Diseño, desarrollo y mantenimiento de sitios web y aplicaciones para empresas y particulares.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>176 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 6 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Nutrición</h3>
+                    <p class="text-gray-600 mb-4">Asesoramiento nutricional personalizado para mejorar hábitos alimenticios y bienestar.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>98 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 7 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Limpieza</h3>
+                    <p class="text-gray-600 mb-4">Servicios de limpieza profesional para hogares y oficinas, puntual o recurrente.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>256 profesionales</span>
+                    </div>
+                </div>
+                
+                <!-- Servicio 8 -->
+                <div class="card service-card p-6">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Mudanzas</h3>
+                    <p class="text-gray-600 mb-4">Servicios de traslado de muebles y enseres, embalaje y montaje en destino.</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-2"><i class="fas fa-user-tie"></i></span>
+                        <span>112 profesionales</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="btn-primary">Ver todas las categorías</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Cómo Funciona -->
+    <section id="como-funciona" class="page-section bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">¿Cómo funciona ServiConnect?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
+                <!-- Para clientes -->
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-6 text-center">Para Clientes</h3>
+                    <div class="space-y-8">
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle">1</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Busca el servicio que necesitas</h4>
+                                <p class="text-gray-600">Navega por categorías o utiliza nuestro buscador con filtros para encontrar exactamente lo que necesitas.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle">2</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Compara profesionales</h4>
+                                <p class="text-gray-600">Revisa perfiles, valoraciones y precios para elegir el profesional que mejor se adapte a tus necesidades.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle">3</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Contacta y contrata</h4>
+                                <p class="text-gray-600">Comunícate directamente con el profesional, acuerda detalles y confirma la contratación.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle">4</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Recibe el servicio y valora</h4>
+                                <p class="text-gray-600">Disfruta del servicio y comparte tu experiencia para ayudar a otros clientes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Para profesionales -->
+                <div>
+                    <h3 class="text-2xl font-bold text-green-600 mb-6 text-center">Para Profesionales</h3>
+                    <div class="space-y-8">
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle bg-green-600">1</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Regístrate como profesional</h4>
+                                <p class="text-gray-600">Crea tu cuenta y completa tu perfil con tus especialidades, experiencia y credenciales.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle bg-green-600">2</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Configura tus servicios</h4>
+                                <p class="text-gray-600">Define tus servicios, precios, zona geográfica y disponibilidad para empezar a recibir solicitudes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle bg-green-600">3</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Recibe solicitudes</h4>
+                                <p class="text-gray-600">Los clientes interesados te contactarán directamente a través de la plataforma.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="step-circle bg-green-600">4</div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Presta tus servicios y cobra</h4>
+                                <p class="text-gray-600">Realiza el trabajo acordado y recibe el pago a través de nuestra plataforma segura.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sistema de comisiones -->
+            <div class="bg-white rounded-lg shadow-lg p-8 max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold text-center mb-6">Sistema de Comisiones</h3>
+                <p class="text-gray-600 mb-6 text-center">ServiConnect conecta a clientes y profesionales de manera transparente, cobrando una pequeña comisión solo cuando se completa un servicio.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div>
+                        <div class="bg-blue-100 rounded-full w-16 h-16 mx-auto flex items-center justify-center mb-4">
+                            <i class="fas fa-handshake text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Acuerdo de Servicio</h4>
+                        <p class="text-sm text-gray-600">Cliente y profesional acuerdan precio y condiciones</p>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-blue-100 rounded-full w-16 h-16 mx-auto flex items-center justify-center mb-4">
+                            <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Pago Seguro</h4>
+                        <p class="text-sm text-gray-600">El cliente paga por la plataforma (sistema escrow)</p>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-blue-100 rounded-full w-16 h-16 mx-auto flex items-center justify-center mb-4">
+                            <i class="fas fa-percentage text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Comisión Justa</h4>
+                        <p class="text-sm text-gray-600">Solo 5-10% por servicio completado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Búsqueda de Servicios -->
+    <section class="page-section bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Encuentra el profesional ideal</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Utiliza nuestro sistema de búsqueda avanzada para encontrar exactamente lo que necesitas, cuando lo necesitas.</p>
+            
+            <!-- Buscador -->
+            <div class="bg-gray-100 rounded-lg p-6 mb-12">
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flex-grow">
+                        <label for="service" class="block text-sm font-medium text-gray-700 mb-1">¿Qué servicio necesitas?</label>
+                        <select id="service" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Selecciona una categoría</option>
+                            <option value="fontaneria">Fontanería</option>
+                            <option value="electricidad">Electricidad</option>
+                            <option value="legal">Asesoría Legal</option>
+                            <option value="pintura">Pintura</option>
+                            <option value="desarrollo">Desarrollo Web</option>
+                            <option value="nutricion">Nutrición</option>
+                            <option value="limpieza">Limpieza</option>
+                            <option value="mudanzas">Mudanzas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex-grow">
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">¿Dónde lo necesitas?</label>
+                        <input type="text" id="location" placeholder="Introduce tu ciudad o código postal" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div class="md:self-end">
+                        <button class="btn-primary w-full">Buscar</button>
+                    </div>
+                </div>
+                
+                <!-- Filtros avanzados -->
+                <div class="mt-6">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="text-sm font-medium text-gray-700">Filtros:</span>
+                        <div class="filter-badge">
+                            Fontanería <button><i class="fas fa-times-circle"></i></button>
+                        </div>
+                        <div class="filter-badge">
+                            Madrid <button><i class="fas fa-times-circle"></i></button>
+                        </div>
+                        <div class="filter-badge">
+                            4+ estrellas <button><i class="fas fa-times-circle"></i></button>
+                        </div>
+                        <div class="filter-badge">
+                            Disponible hoy <button><i class="fas fa-times-circle"></i></button>
+                        </div>
+                    </div>
+                    
+                    <details>
+                        <summary class="text-blue-600 hover:text-blue-800 cursor-pointer text-sm font-medium">Mostrar filtros avanzados</summary>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Valoración mínima</label>
+                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option>Cualquiera</option>
+                                    <option>3+ estrellas</option>
+                                    <option>4+ estrellas</option>
+                                    <option>4.5+ estrellas</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Disponibilidad</label>
+                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option>Cualquier momento</option>
+                                    <option>Disponible hoy</option>
+                                    <option>Disponible esta semana</option>
+                                    <option>Disponible en fin de semana</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Rango de precio</label>
+                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option>Cualquier precio</option>
+                                    <option>Económico</option>
+                                    <option>Precio medio</option>
+                                    <option>Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            
+            <!-- Resultados de búsqueda -->
+            <div id="profesionales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Profesional 1 -->
+                <div class="card p-6">
+                    <div class="flex items-start">
+                        <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person1.jpg" alt="Profesional" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">Carlos Rodríguez</h3>
+                            <p class="text-blue-600 font-medium mb-2">Fontanero Profesional</p>
+                            <div class="flex items-center mb-2">
+                                <div class="rating mr-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm">4.5 (128 valoraciones)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 mt-4 pt-4">
+                        <p class="text-gray-600 mb-4">Fontanero con más de 15 años de experiencia en instalaciones y reparaciones. Respuesta rápida y trabajo garantizado.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Fugas</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Instalaciones</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Desatascos</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Urgencias 24h</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg">Desde 45€/hora</span>
+                            <a href="#" class="btn-primary">Contactar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profesional 2 -->
+                <div class="card p-6">
+                    <div class="flex items-start">
+                        <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person2.jpg" alt="Profesional" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">Ana López</h3>
+                            <p class="blue-600 font-medium mb-2">Asesora Legal</p>
+                            <div class="flex items-center mb-2">
+                                <div class="rating mr-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm">5.0 (87 valoraciones)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 mt-4 pt-4">
+                        <p class="text-gray-600 mb-4">Abogada especializada en derecho civil y mercantil. Consultas online o presenciales. Primera consulta gratuita.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Contratos</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Reclamaciones</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Herencias</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Consultas online</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg">Desde 60€/consulta</span>
+                            <a href="#" class="btn-primary">Contactar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profesional 3 -->
+                <div class="card p-6">
+                    <div class="flex items-start">
+                        <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person3.jpg" alt="Profesional" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">Javier Martínez</h3>
+                            <p class="blue-600 font-medium mb-2">Desarrollador Web</p>
+                            <div class="flex items-center mb-2">
+                                <div class="rating mr-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm">4.0 (52 valoraciones)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 mt-4 pt-4">
+                        <p class="text-gray-600 mb-4">Desarrollo sitios web a medida y tiendas online. Diseño responsivo y optimizado para SEO. Entregas en tiempo récord.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">WordPress</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">E-commerce</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Landing pages</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Diseño web</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg">Desde 300€/proyecto</span>
+                            <a href="#" class="btn-primary">Contactar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="btn-primary">Ver más profesionales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistema de Chat y Reservas -->
+    <section class="page-section bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Comunícate y reserva fácilmente</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Nuestro sistema integrado facilita la comunicación directa con los profesionales y la gestión de reservas de servicios.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Sistema de Chat -->
+                <div>
+                    <h3 class="section-subtitle text-center mb-6">Chat en tiempo real</h3>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-blue-600 text-white p-4">
+                            <div class="flex items-center">
+                                <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person1.jpg" alt="Profesional" class="w-10 h-10 rounded-full object-cover mr-3">
+                                <div>
+                                    <h4 class="font-semibold">Carlos Rodríguez</h4>
+                                    <p class="text-sm text-blue-200">Fontanero Profesional • En línea</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 h-80 overflow-y-auto bg-gray-50">
+                            <div class="chat-message other">
+                                <p>Hola, ¿en qué puedo ayudarte hoy?</p>
+                                <span class="text-xs text-gray-500">10:23</span>
+                            </div>
+                            
+                            <div class="chat-message user">
+                                <p>Hola Carlos, tengo una fuga en la tubería bajo el fregadero de mi cocina. ¿Podrías venir a arreglarla?</p>
+                                <span class="text-xs text-gray-300">10:25</span>
+                            </div>
+                            
+                            <div class="chat-message other">
+                                <p>Claro que sí. ¿Cuándo te vendría bien? Tengo disponibilidad mañana por la mañana o pasado mañana por la tarde.</p>
+                                <span class="text-xs text-gray-500">10:26</span>
+                            </div>
+                            
+                            <div class="chat-message user">
+                                <p>Mañana por la mañana sería perfecto. ¿Podrías venir sobre las 10:00?</p>
+                                <span class="text-xs text-gray-300">10:28</span>
+                            </div>
+                            
+                            <div class="chat-message other">
+                                <p>Perfecto, puedo estar allí a las 10:00. ¿Me puedes dar tu dirección exacta?</p>
+                                <span class="text-xs text-gray-500">10:29</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border-t">
+                            <div class="flex">
+                                <input type="text" placeholder="Escribe un mensaje..." class="flex-grow rounded-l-md border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sistema de Reservas -->
+                <div>
+                    <h3 class="section-subtitle text-center mb-6">Reserva de servicios</h3>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-green-600 text-white p-4">
+                            <h4 class="font-semibold text-center">Confirma tu reserva</h4>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="mb-6">
+                                <div class="flex items-center mb-4">
+                                    <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person1.jpg" alt="Profesional" class="w-16 h-16 rounded-full object-cover mr-4">
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Carlos Rodríguez</h4>
+                                        <p class="text-blue-600">Fontanero Profesional</p>
+                                        <div class="rating text-sm">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <span class="text-gray-600">(4.5)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Servicio</label>
+                                        <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                            <option>Reparación de fugas</option>
+                                            <option>Instalación de grifería</option>
+                                            <option>Desatascos</option>
+                                            <option>Otros (especificar)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Fecha y hora</label>
+                                        <input type="datetime-local" value="2023-07-15T10:00" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                                    <input type="text" placeholder="Calle, número, piso..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Descripción del problema</label>
+                                    <textarea rows="3" placeholder="Describe el problema con detalle..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                                </div>
+                                
+                                <div class="bg-gray-50 p-4 rounded-md mb-4">
+                                    <h5 class="font-medium mb-2">Estimación de costes</h5>
+                                    <div class="flex justify-between mb-2">
+                                        <span>Tarifa base (1 hora)</span>
+                                        <span>45,00 €</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2 text-sm text-gray-600">
+                                        <span>+ Horas adicionales (si fuera necesario)</span>
+                                        <span>35,00 € / hora</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2 text-sm text-gray-600">
+                                        <span>+ Materiales (si fueran necesarios)</span>
+                                        <span>Según consumo</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center mb-4">
+                                    <input type="checkbox" id="terms" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <label for="terms" class="ml-2 text-sm text-gray-600">Acepto los términos y condiciones del servicio</label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center">
+                                <button class="btn-primary">Confirmar reserva</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios de la Plataforma -->
+    <section id="beneficios" class="page-section bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">¿Por qué elegir ServiConnect?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Beneficio 1 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-check-circle text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Profesionales verificados</h3>
+                    <p class="text-gray-600">Todos los profesionales pasan por un proceso de verificación para garantizar su identidad y credenciales.</p>
+                </div>
+                
+                <!-- Beneficio 2 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-star text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Valoraciones reales</h3>
+                    <p class="text-gray-600">Sistema de reseñas y valoraciones verificadas para ayudarte a elegir los mejores profesionales.</p>
+                </div>
+                
+                <!-- Beneficio 3 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Pagos seguros</h3>
+                    <p class="text-gray-600">Sistema de pago protegido que garantiza la satisfacción antes de liberar el dinero al profesional.</p>
+                </div>
+                
+                <!-- Beneficio 4 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-headset text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Soporte personalizado</h3>
+                    <p class="text-gray-600">Equipo de atención al cliente disponible para resolver cualquier incidencia durante todo el proceso.</p>
+                </div>
+                
+                <!-- Beneficio 5 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-file-contract text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Sin contratos fijos</h3>
+                    <p class="text-gray-600">Libertad para contratar servicios puntuales sin compromisos a largo plazo ni permanencias.</p>
+                </div>
+                
+                <!-- Beneficio 6 -->
+                <div class="text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-map-marker-alt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Servicios locales</h3>
+                    <p class="text-gray-600">Encuentra profesionales cercanos a tu ubicación para servicios más rápidos y personalizados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panel de Control para Profesionales -->
+    <section class="page-section bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Panel para Profesionales</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Gestiona tus servicios, solicitudes y pagos desde nuestro intuitivo panel de control.</p>
+            
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                <div class="grid grid-cols-12">
+                    <!-- Sidebar -->
+                    <div class="col-span-12 md:col-span-3 dashboard-sidebar p-0">
+                        <div class="py-6 px-4 border-b border-gray-700">
+                            <div class="flex items-center">
+                                <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person2.jpg" alt="Profesional" class="w-12 h-12 rounded-full object-cover mr-3">
+                                <div>
+                                    <h3 class="font-semibold text-white">Ana López</h3>
+                                    <p class="text-sm text-gray-400">Asesora Legal</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <nav class="py-4">
+                            <a href="#" class="active"><i class="fas fa-tachometer-alt w-5 inline-block"></i> Dashboard</a>
+                            <a href="#"><i class="fas fa-edit w-5 inline-block"></i> Mi perfil</a>
+                            <a href="#"><i class="fas fa-list-alt w-5 inline-block"></i> Mis servicios</a>
+                            <a href="#"><i class="fas fa-calendar-alt w-5 inline-block"></i> Reservas</a>
+                            <a href="#"><i class="fas fa-comments w-5 inline-block"></i> Mensajes</a>
+                            <a href="#"><i class="fas fa-money-bill-wave w-5 inline-block"></i> Pagos</a>
+                            <a href="#"><i class="fas fa-chart-line w-5 inline-block"></i> Estadísticas</a>
+                            <a href="#"><i class="fas fa-cog w-5 inline-block"></i> Configuración</a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="col-span-12 md:col-span-9 dashboard-content p-6">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-4">Bienvenida, Ana</h3>
+                            <p class="text-gray-600 mb-6">Aquí tienes un resumen de tu actividad reciente y próximas citas.</p>
+                            
+                            <!-- Stats Cards -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Vistas de perfil</p>
+                                    <p class="text-2xl font-bold">324</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 12% esta semana</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Solicitudes pendientes</p>
+                                    <p class="text-2xl font-bold">8</p>
+                                    <p class="text-gray-600 text-sm">3 nuevas hoy</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Servicios completados</p>
+                                    <p class="text-2xl font-bold">42</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 5 este mes</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Valoración media</p>
+                                    <p class="text-2xl font-bold">4.8 <span class="text-yellow-500"><i class="fas fa-star text-sm"></i></span></p>
+                                    <p class="text-gray-600 text-sm">De 87 valoraciones</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Próximas Reservas -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold mb-4">Próximas reservas</h4>
+                            <div class="bg-white rounded-lg shadow overflow-hidden">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Servicio</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full" src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/avatar.jpg" alt="">
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Laura Martín</div>
+                                                        <div class="text-sm text-gray-500">laura@ejemplo.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Consulta legal</div>
+                                                <div class="text-sm text-gray-500">Asuntos laborales</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">15 Jul 2023</div>
+                                                <div class="text-sm text-gray-500">10:00 - 11:00</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmada</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Ver detalles</a>
+                                                <a href="#" class="text-red-600 hover:text-red-900">Cancelar</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full" src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person5.jpg" alt="">
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Miguel Sánchez</div>
+                                                        <div class="text-sm text-gray-500">miguel@ejemplo.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Asesoría legal</div>
+                                                <div class="text-sm text-gray-500">Contratos mercantiles</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">17 Jul 2023</div>
+                                                <div class="text-sm text-gray-500">16:30 - 17:30</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendiente</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Aceptar</a>
+                                                <a href="#" class="text-red-600 hover:text-red-900">Rechazar</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Últimos Mensajes -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Mensajes recientes</h4>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex items-center">
+                                            <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/avatar.jpg" alt="Cliente" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <h5 class="font-semibold">Laura Martín</h5>
+                                                <p class="text-sm text-gray-500">Hace 2 horas</p>
+                                            </div>
+                                        </div>
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Nuevo</span>
+                                    </div>
+                                    <p class="text-gray-600">Hola Ana, te escribo para confirmar nuestra cita de mañana a las 10:00. ¿Necesito llevar algún documento específico?</p>
+                                    <div class="mt-3">
+                                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Responder</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex items-center">
+                                            <img src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person5.jpg" alt="Cliente" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <h5 class="font-semibold">Miguel Sánchez</h5>
+                                                <p class="text-sm text-gray-500">Ayer, 18:45</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600">Buenas tardes, me gustaría solicitar una consulta para revisar unos contratos mercantiles que estoy preparando. ¿Tendrías disponibilidad la próxima semana?</p>
+                                    <div class="mt-3">
+                                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Responder</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panel de Administrador -->
+    <section class="page-section bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Panel de Administración</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Controla todos los aspectos de la plataforma desde el potente panel de administración.</p>
+            
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                <div class="grid grid-cols-12">
+                    <!-- Sidebar -->
+                    <div class="col-span-12 md:col-span-3 dashboard-sidebar p-0">
+                        <div class="py-6 px-4 border-b border-gray-700">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl mr-3">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white">Panel Admin</h3>
+                                    <p class="text-sm text-gray-400">ServiConnect</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <nav class="py-4">
+                            <a href="#" class="active"><i class="fas fa-tachometer-alt w-5 inline-block"></i> Dashboard</a>
+                            <a href="#"><i class="fas fa-users w-5 inline-block"></i> Usuarios</a>
+                            <a href="#"><i class="fas fa-briefcase w-5 inline-block"></i> Servicios</a>
+                            <a href="#"><i class="fas fa-calendar-check w-5 inline-block"></i> Reservas</a>
+                            <a href="#"><i class="fas fa-money-bill-wave w-5 inline-block"></i> Pagos</a>
+                            <a href="#"><i class="fas fa-star w-5 inline-block"></i> Valoraciones</a>
+                            <a href="#"><i class="fas fa-percentage w-5 inline-block"></i> Comisiones</a>
+                            <a href="#"><i class="fas fa-cog w-5 inline-block"></i> Configuración</a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="col-span-12 md:col-span-9 dashboard-content p-6">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-4">Dashboard de Administración</h3>
+                            <p class="text-gray-600 mb-6">Resumen general y estadísticas de la plataforma.</p>
+                            
+                            <!-- Stats Cards -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Usuarios Registrados</p>
+                                    <p class="text-2xl font-bold">12,458</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 8% este mes</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Profesionales Activos</p>
+                                    <p class="text-2xl font-bold">3,187</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 12% este mes</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Servicios Realizados</p>
+                                    <p class="text-2xl font-bold">28,945</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 15% este mes</p>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                    <p class="text-gray-500 text-sm">Ingresos por Comisiones</p>
+                                    <p class="text-2xl font-bold">58,734€</p>
+                                    <p class="text-green-600 text-sm"><i class="fas fa-arrow-up"></i> 23% este mes</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Gráfico de Actividad -->
+                            <div class="bg-white p-6 rounded-lg shadow mb-6">
+                                <h4 class="text-lg font-semibold mb-4">Actividad de la plataforma</h4>
+                                <div class="h-64 flex items-end justify-between space-x-2">
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-1/3 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Lun</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-1/2 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Mar</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-2/5 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Mié</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-3/5 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Jue</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-4/5 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Vie</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-3/4 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Sáb</div>
+                                    </div>
+                                    <div class="h-30 w-full bg-blue-100 relative">
+                                        <div class="absolute bottom-0 w-full h-1/4 bg-blue-500"></div>
+                                        <div class="text-xs text-center mt-2">Dom</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Últimos Usuarios Registrados -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold mb-4">Últimos profesionales registrados</h4>
+                            <div class="bg-white rounded-lg shadow overflow-hidden">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha registro</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full" src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person3.jpg" alt="">
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Javier Martínez</div>
+                                                        <div class="text-sm text-gray-500">javier@ejemplo.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Desarrollo Web</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">12 Jul 2023</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendiente validación</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Validar</a>
+                                                <a href="#" class="text-red-600 hover:text-red-900">Rechazar</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full" src="https://cdn.jsdelivr.net/gh/stevenlei/fake-images@main/images/person4.jpg" alt="">
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Carmen Ruiz</div>
+                                                        <div class="text-sm text-gray-500">carmen@ejemplo.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Nutrición</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">11 Jul 2023</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Validado</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Ver perfil</a>
+                                                <a href="#" class="text-red-600 hover:text-red-900">Suspender</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Configuración de Comisiones -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Configuración de comisiones</h4>
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <h5 class="font-medium mb-4">Comisiones por categoría</h5>
+                                        <div class="space-y-4">
+                                            <div>
+                                                <div class="flex justify-between mb-1">
+                                                    <span class="text-sm text-gray-600">Fontanería</span>
+                                                    <span class="text-sm font-medium">10%</span>
+                                                </div>
+                                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 10%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="flex justify-between mb-1">
+                                                    <span class="text-sm text-gray-600">Electricidad</span>
+                                                    <span class="text-sm font-medium">10%</span>
+                                                </div>
+                                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 10%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="flex justify-between mb-1">
+                                                    <span class="text-sm text-gray-600">Asesoría Legal</span>
+                                                    <span class="text-sm font-medium">8%</span>
+                                                </div>
+                                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 8%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="flex justify-between mb-1">
+                                                    <span class="text-sm text-gray-600">Desarrollo Web</span>
+                                                    <span class="text-sm font-medium">5%</span>
+                                                </div>
+                                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 5%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-medium mb-4">Ajustar comisiones</h5>
+                                        <form>
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                                    <option>Fontanería</option>
+                                                    <option>Electricidad</option>
+                                                    <option>Asesoría Legal</option>
+                                                    <option>Desarrollo Web</option>
+                                                    <option>Nutrición</option>
+                                                    <option>Limpieza</option>
+                                                    <option>Mudanzas</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Porcentaje de comisión</label>
+                                                <input type="number" value="10" min="0" max="30" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de comisión</label>
+                                                <div class="space-y-2">
+                                                    <div class="flex items-center">
+                                                        <input type="radio" id="percentage" name="commission_type" checked class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                                        <label for="percentage" class="ml-2 block text-sm text-gray-700">Porcentaje sobre el precio</label>
+                                                    </div>
+                                                    <div class="flex items-center">
+                                                        <input type="radio" id="fixed" name="commission_type" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                                        <label for="fixed" class="ml-2 block text-sm text-gray-700">Tarifa fija por servicio</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="button" class="btn-primary">Guardar cambios</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registro / Login Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="loginModal">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Accede a tu cuenta</h3>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <input type="password" id="password" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <label for="remember" class="ml-2 text-sm text-gray-600">Recordarme</label>
+                        </div>
+                        <a href="#" class="text-sm text-blue-600 hover:text-blue-800">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    
+                    <button class="btn-primary w-full">Iniciar sesión</button>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        ¿No tienes cuenta? <a href="#" class="text-blue-600 hover:text-blue-800">Regístrate</a>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">O continúa con</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <i class="fab fa-google text-red-600 mr-2"></i> Google
+                        </button>
+                        <button class="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">ServiConnect</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Conectamos clientes con los mejores profesionales de forma rápida, segura y eficiente.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Categorías populares</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Fontanería</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Electricidad</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Asesoría Legal</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Desarrollo Web</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Limpieza</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Nutrición</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cómo funciona</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Regístrate como profesional</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Buscar servicios</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Preguntas frecuentes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>Calle Principal 123, 28001 Madrid, España</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span>+34 91 123 45 67</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>info@serviconnect.com</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <h5 class="text-sm font-semibold mb-2">Suscríbete a nuestra newsletter</h5>
+                        <div class="flex">
+                            <input type="email" placeholder="Tu email" class="flex-grow rounded-l-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 ServiConnect. Todos los derechos reservados.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Política de privacidad</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Términos y condiciones</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
+
